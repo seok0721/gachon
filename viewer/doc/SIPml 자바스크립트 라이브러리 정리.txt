@@ -1,0 +1,121 @@
+/**
+ * SIP Stack을 초기화 하기 위해 사용되는 정보를 가지고 있는 클래스
+ *
+ * Anonymous Class는 json 형태의 데이터 포맷을 가진다.
+ * 자세한 포맷은 http://json.org 사이트 참조.
+ *
+ * 아래 사이트를 번역하여 정리한 내용임.
+ * http://sipml5.org/docgen/symbols/SIPml.Stack.Configuration.html
+ */
+
+object SIPml.Stack.Configuration {
+
+  /*
+   * 오디오 또는 비디오의 최대 전송 속도, 0을 사용하면 브라우저가 적합한
+   * 값을 결정한다.
+   * ex) {audio: 64, video: 512}
+   */
+  object bandwidth;
+
+  /*
+   * SIP Request에 사용되는 이름이다. 사용자 식별 이름정도로 생각하면 된다.
+   * ex) I Am Legend
+   */
+  string display_name;
+
+  /*
+   * click2call / click2dial 서비스 사용 여부를 확인한다.
+   * click2call은 웹 기반의 통신이며, 사용자가 버튼이나 이미지를 클릭했을
+   * 때, 즉시 다른 사람과 실시간으로 연결되는 서비스를 말한다.
+   */
+  boolean enable_click2call;
+
+  /*
+   * 모든 call에 대하여 같은 미디어 스트림을 재사용 할지 확인한다.
+   * 웹사이트가 https를 사용하지 않는 경우, 브라우저는 항상 카메라 사용
+   * 요청 다이얼로그를 실행할 것이다. (call을 생성할때 마다)
+   * 캐싱을 사용하면 이런 작업을 미리 방지할 수 있다.
+   */
+  boolean enable_media_stream_cache;
+
+  /*
+   * SIP 레거시 네트워크 (ex. android)에 call 요청이 가능하도록
+   * RTCWeb_breaker 사용 여부를 확인한다.
+   */
+  boolean enable_rtcweb_breaker;
+
+  /*
+   * 특정 이벤트에 실행할 이벤트 리스너를 기술한다.
+   *
+   * ex)
+   * { events: '*', listener: function(e){} }
+   * { events: 'started', listener: function(e){} }
+   * { events: ['started', 'stopped'], listener: function(e){} }
+   *
+   * addEventListener 를 사용하여 stack 에 리스너를 추가할 수 있다.
+   */
+  object events_listener;
+
+  /*
+   * ICE를 이용한 탐색에 사용할 TURN, STUN 서버 목록을 기술한다.
+   * TURN/STUN 서버를 사용하지 않을 경우, empty array로 초기화한다. (ex. [])
+   *
+   * [{ url: 'stun:stun.l.google.com:19302'},
+   *  { url:'turn:user@numb.viagenie.ca', credential:'myPassword'}]
+  array ice_servers;
+
+  /*
+   * 인증할 사람의 아이디를 입력한다. ex) bob or +33600000
+   */
+  string impi;
+
+  /*
+   * 전체 SIP URL 주소를 입력한다. ex)
+   * sip:+33600000000@example.com
+   * tel:+33600000000
+   * sip:bob@example.com
+   */
+  string impu;
+
+  /*
+   * 도메인명에 상관없이 밖으로 나가는 모든 요청들에 사용하는
+   * 도착지 IP주소와 포트를 설정하는데 사용된다. (= Proxy)
+   *
+   * This is a good option for developers using a SIP domain name without
+   * valid DNS A/NAPTR/SRV records. You should not set this value unless
+   * you know what you're doing.
+   * ex): udp://192.168.0.12:5060
+   */
+  string outbound_proxy_url;
+
+  /*
+   * SIP 인증에 사용할 비밀번호에 사용한다.
+   */
+  string password;
+
+  /*
+   * 도메인 이름에 사용된다. stack 생성자에 사용되며,
+   * setConfiguration 은 옵션이다.
+   */
+  string realm;
+
+  /*
+   * 밖으로 나가는 모든 Request에 대하여 추가 할 Stack-level SIP 헤더 목록
+   * 을 기술한다.
+   */
+  array sip_headers;
+
+  /*
+   * 최소-최대 비디오 크기를 정의하는데 사용된다. 모든 값은 옵션이다.
+   * 브라우저는 최소-최대값 사이에서 카메라의 성능에 따라서 최적의 값을
+   * 찾는다.
+   * ex) { minWidth:640, minHeight:480, maxWidth:1920, maxHeight:1080 }
+   */
+  object video_size;
+
+  /*
+   * SIP 서버 또는 게이트웨이 주소에 접속하기 위한 웹소켓 프록시 URL,
+   * ex) ws://sipml5.org:5060
+   */
+  string websocket_proxy_url;
+}
